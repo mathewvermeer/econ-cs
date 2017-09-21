@@ -41,3 +41,14 @@ barplot(sort(table(ransomware['Registrar'])), ylab = "Frequency",las = 2, horiz 
 #Plot frequency per URL
 #Todo: URL --> TLD, only most occuring, color coded mallware
 barplot(table(ransomware['URL']), ylab = "Frequency",las = 2, horiz = TRUE)
+
+
+
+
+
+
+ransomware <- read.csv("https://ransomwaretracker.abuse.ch/feeds/csv/",header = TRUE,sep = ",",skip = 8)
+ransomware <- ransomware[!(is.na(ransomware$Registrar) | ransomware$Registrar==""), ]
+total <- count(ransomware, "Registrar")
+offline <- ransomware[ransomware$Status == "offline"]
+offline <- count
