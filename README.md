@@ -7,6 +7,5 @@
 - Samuel Natalius / 4608380
 - Mathew Vermeer / 4216989
 
-### TODO
-
-- Group infections by IP to get true infection frequencies.
+### Theme of Assignment
+Financial Botnets: Ransomeware Tracker
