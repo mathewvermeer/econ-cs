@@ -1,4 +1,4 @@
-library("ggplot2")
+library(ggplot2)
 library(plyr)
 
 wrap.it <- function(x, len)
@@ -29,7 +29,7 @@ offlineCount <- count(offline, "Registrar")
 merged <- merge(total, offlineCount, by="Registrar")
 merged$f <- merged$freq.y / merged$freq.x
 thresholded <- merged[merged$freq.x > 10, ]
-ordered <- merged[order(merged$f), ]
+ordered <- merged[order(merged$f), ]	
 orderedThresholded <- thresholded[order(thresholded$f), ]
 top10 <- ordered[1:10, ]
 top10Thresholded <- orderedThresholded[1:10, ]
