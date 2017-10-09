@@ -7,13 +7,27 @@ ransomware <- read.csv("https://ransomwaretracker.abuse.ch/feeds/csv/",header = 
 ransomware <- ransomware[!(is.na(ransomware$Country) | ransomware$Country==""), ]
 ransomware$Country <- substring(ransomware$Country, 0, 2)
 
-# plot no of incidents per month
-bymonth <- data.table(ransomware)[,.N,by=format(as.Date(ransomware$X..Firstseen..UTC.), "%Y-%m")]
+ransomwareDS <- ransomware[ransomware$Threat =="Distribution Site",]
+ransomwarePS <- ransomware[ransomware$Threat =="Payment Site",]
+ransomwareC2 <- ransomware[ransomware$Threat =="C2",]
+ransomwareCerber <- ransomware[ransomware$Malware == "Cerber",]
+ransomwareX <- ransomware[ransomware$Country == "US" & ransomware$Threat =="Distribution Site" & ransomware$Malware == "Cerber",]
+
+# plot no of incidents per month in 2016
+bymonth <- data.table(ransomwareX)[,.N,by=list(format(as.Date(ransomwareX$X..Firstseen..UTC.), "%Y-%m"))]
 ggplot(bymonth, aes(x=bymonth$format,y=bymonth$N)) +
   geom_bar(stat = "identity") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(title="No. of incidents per month", x = "Month",y="No. of incidents")
+  labs(title="No. of new hosts (US, Cerber, Dist. Site)", x = "Month",y="No. of new hosts")
 summary(bymonth)
+
+# plot no of incidents per year
+byyear <- data.table(ransomware)[,.N,by=format(as.Date(ransomware$X..Firstseen..UTC.), "%Y")]
+ggplot(byyear, aes(x=byyear$format,y=byyear$N)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(title="No. of incidents per year", x = "Year",y="No. of incidents")
+summary(byyear)
 
 #plot occurences of range no. of incidents
 byN2 <- data.frame(Range=character(),Occurences=integer())
