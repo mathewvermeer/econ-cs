@@ -46,3 +46,6 @@ top10Thresholded <- orderedThresholded[1:10, ]
 
 barplot(top10$f, names=top10$Country, xlab = "Country", ylab = "Fraction online", main = "Fraction of threats still online")
 barplot(top10Thresholded$f, names=top10Thresholded$Country, xlab = "Country", ylab = "Fraction online", main = "Thresholded fraction of threats still online")
+
+reg <-lm(merged$f ~ merged$IT.NET.USER.ZS + merged$SP.POP.TOTL + merged$IT.NET.SECR)
+summary(reg)
