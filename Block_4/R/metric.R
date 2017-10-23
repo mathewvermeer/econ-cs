@@ -31,12 +31,12 @@ drops <- c("iso2c","Country", "country", "year")
 merged <- merged[ , !(names(merged) %in% drops)]
 
 res <- cor(merged)
-res2 <- rcorr(merged)
-res2
-
+res2 <- rcorr(as.matrix(merged))
+res2_P <- res2$P
+res2_P[is.na(res2_P)] <- 0
 corrplot(res, type = "upper", order = "hclust", tl.col = "black", tl.srt = 45)
 corrplot(res2$r, type = "upper", order = "hclust", tl.col = "black", tl.srt = 45)
-
+corrplot(res2_P, type = "upper", order = "hclust", tl.col = "black", tl.srt = 45)
 
 thresholded <- merged[merged$freq.x > 10, ]
 ordered <- merged[order(-merged$f), ]
